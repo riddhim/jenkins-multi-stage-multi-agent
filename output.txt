@@ -1,0 +1,131 @@
+No docker containers:
+jenkins@ip-172-31-8-154:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+Maven related docker container created:
+jenkins@ip-172-31-8-154:~$
+jenkins@ip-172-31-8-154:~$ docker ps
+CONTAINER ID   IMAGE                         COMMAND                  CREATED         STATUS         PORTS     NAMES
+505e9839db   maven:3.8.1-adoptopenjdk-11   "/usr/local/bin/mvn-…"   7 seconds ago   Up 3 seconds             quirky_banach
+
+Node related docker container created:
+jenkins@ip-172-31-8-154:~$
+jenkins@ip-172-31-8-154:~$ docker ps
+CONTAINER ID   IMAGE            COMMAND                  CREATED         STATUS                  PORTS     NAMES
+ce9dc1db91   node:16-alpine   "docker-entrypoint.s…"   3 seconds ago   Up Less than a second             lucid_carver
+
+Docekr containers gets terminated:
+jenkins@ip-172-31-8-154:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+jenkins@ip-172-31-8-154:~$
+
+Console Output:
+
+Started by user Riddhi DevOps
+Obtained Jenkinsfile from git https://github.com/riddhim/jenkins-multi-stage-multi-agent.git
+[Pipeline] Start of Pipeline
+[Pipeline] stage
+[Pipeline] { (Back-end)
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/jenkins-job
+[Pipeline] {
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/jenkins-job/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/riddhim/jenkins-multi-stage-multi-agent.git # timeout=10
+Fetching upstream changes from https://github.com/riddhim/jenkins-multi-stage-multi-agent.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/riddhim/jenkins-multi-stage-multi-agent.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision a634a5846c982457a7421e21fb4e03f684349c (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a634a5846c982457a7421e21fb4e03f684349c # timeout=10
+Commit message: "Create Jenkinsfile"
+ > git rev-list --no-walk a634a5846c982457a7421e21fb4e03f684349c # timeout=10
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . maven:3.8.1-adoptopenjdk-11
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins does not seem to be running inside a container
+$ docker run -t -d -u 115:122 -w /var/lib/jenkins/workspace/jenkins-job -v /var/lib/jenkins/workspace/jenkins-job:/var/lib/jenkins/workspace/jenkins-job:rw,z -v /var/lib/jenkins/workspace/jenkins-job@tmp:/var/lib/jenkins/workspace/jenkins-job@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** maven:3.8.1-adoptopenjdk-11 cat
+$ docker top 505e98f039db1fac7b4dcf58496c1aa9a44d0cd86c0095e39463d9891c24 -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ mvn --version
+Apache Maven 3.8.1 (05c21c65bdfed0f71a2fda8b84da59348c4c5d)
+Maven home: /usr/share/maven
+Java version: 11.0.11, vendor: AdoptOpenJDK, runtime: /opt/java/openjdk
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "6.2.0-1012-aws", arch: "amd64", family: "unix"
+[Pipeline] }
+$ docker stop --time=1 505e98f039db1fac7b4dcf58496c1aa9a44d0cd86c0095e39463d9891c24
+$ docker rm -f --volumes 505e98f039db1fac7b4dcf58496c1aa9a44d0cd86c0095e39463d9891c24
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Front-end)
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/jenkins-job
+[Pipeline] {
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/jenkins-job/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/riddhim/jenkins-multi-stage-multi-agent.git # timeout=10
+Fetching upstream changes from https://github.com/riddhim/jenkins-multi-stage-multi-agent.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/riddhim/jenkins-multi-stage-multi-agent.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision a634a5846c982457a748f21e214e03f684349c (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a634a5846c982457a748f21e214e03f684349c # timeout=10
+Commit message: "Create Jenkinsfile"
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:16-alpine
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins does not seem to be running inside a container
+$ docker run -t -d -u 115:122 -w /var/lib/jenkins/workspace/jenkins-job -v /var/lib/jenkins/workspace/jenkins-job:/var/lib/jenkins/workspace/jenkins-job:rw,z -v /var/lib/jenkins/workspace/jenkins-job@tmp:/var/lib/jenkins/workspace/jenkins-job@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:16-alpine cat
+$ docker top ce94bdc1db9188292310a99c9fcb7642b55dc7c639df216b569c85ec614 -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ node --version
+v16.20.2
+[Pipeline] }
+$ docker stop --time=1 ce94bdc1db9188292310a99c9fcb7642b55dc7c639df216b569c85ec614
+$ docker rm -f --volumes ce94bdc1db9188292310a99c9fcb7642b55dc7c639df216b569c85ec614
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] End of Pipeline
+Finished: SUCCESS
